@@ -1,0 +1,36 @@
+.form-container {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.form-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: #45a049;
+}
+
+.success-message {
+    color: #4caf50;
+    margin-top: 10px;
+    background-color: rgba(0, 255, 52, 0.39);
+    padding: .5rem;
+    width: max-content;
+}

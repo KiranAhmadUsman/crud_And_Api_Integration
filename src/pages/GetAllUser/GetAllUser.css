@@ -1,0 +1,8 @@
+.delete-message {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: red;
+    background-color: rgba(255, 0, 0, 0.329);
+    padding: .5rem;
+}
