@@ -1,4 +1,8 @@
-* {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,6 +20,7 @@
   top: 0;
   left: 0;
   height: 100vh;
+  z-index: 9999;
 }
 
 .sidebar h2 {
@@ -65,8 +70,6 @@
   margin-bottom: 1.25rem;
   display: flex;
   justify-content: end;
-  z-index: -1;
-
 }
 
 #getAllUsersContainer {
@@ -118,4 +121,4 @@ td {
   background-color: #ff6347;
 }
 
-/* Add more styles for Links, buttons, or other elements as needed */
+Add more styles for Links, buttons, or other elements as needed */

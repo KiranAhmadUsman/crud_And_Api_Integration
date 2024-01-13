@@ -1,6 +1,6 @@
 const Home = () => {
     return (
-        <h2 style={ { height: "100%" } }>Home</h2>
+        <h2 className="h-full flex justify-center items-center text-3xl">Home</h2>
     )
 }
 export default Home;
