@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import GetAllData from "../../Services/GetAllUser";
-import deleteUser from "../../Services/DeleteUser";
+import { deleteUser, GetAllData } from "../../Services/UserApi";
+
 
 const GetAllUsers = () => {
     const [users, setUsers] = useState([]);
@@ -17,7 +17,8 @@ const GetAllUsers = () => {
     const handleDelete = async (id) => {
         try {
             const newdata = await deleteUser(id);
-            setUsers(newdata);
+            const res = await GetAllData();
+            setUsers(res);
             setDeleteMessage("User is deleted!");
             setTimeout(() => {
                 setDeleteMessage('');

@@ -6,7 +6,7 @@ import countryOptions from '../../const/countryArray';
 import DropDown from '../../Component/DropDown';
 import genderOptions from '../../const/GenderArrat';
 import employmentOptions from '../../const/employmentArray';
-import CreateUser from '../../Services/CreateUser';
+import { CreateUser } from '../../Services/UserApi';
 
 const Form = () => {
     const [formData, setFormData] = useState({

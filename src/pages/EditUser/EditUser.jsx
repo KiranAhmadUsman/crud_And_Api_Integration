@@ -7,8 +7,7 @@ import countryOptions from "../../const/countryArray";
 import DropDown from "../../Component/DropDown";
 import genderOptions from "../../const/GenderArrat";
 import employmentOptions from "../../const/employmentArray";
-import getOneUser from "../../Services/EditUser"
-import updateUser from "../../Services/UpdateUser";
+import { getOneUser, updateUser } from "../../Services/UserApi";
 const EditUser = () => {
     const { id } = useParams();
     const [userData, setUserData] = useState({
@@ -37,8 +36,9 @@ const EditUser = () => {
     };
     const handleUpdateUser = async () => {
         try {
-            const success = await updateUser(id, userData);
-            if (success) {
+            const response = await updateUser(id, userData);
+
+            if (response.status === 200) {
                 setUpdateMessage("User updated successfully!");
                 setTimeout(() => {
                     setUpdateMessage("");
