@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useUpdate from "../../hooks/useUpdate";
-import useOneGet from "../../hooks/useOneGet";
 import Input from "../../Component/Input";
 import Label from "../../Component/label";
 import Button from "../../Component/Button";
@@ -9,7 +7,8 @@ import countryOptions from "../../const/countryArray";
 import DropDown from "../../Component/DropDown";
 import genderOptions from "../../const/GenderArrat";
 import employmentOptions from "../../const/employmentArray";
-
+import getOneUser from "../../Services/EditUser"
+import updateUser from "../../Services/UpdateUser";
 const EditUser = () => {
     const { id } = useParams();
     const [userData, setUserData] = useState({
@@ -21,16 +20,13 @@ const EditUser = () => {
     });
     const [updateMessage, setUpdateMessage] = useState("");
     const navigate = useNavigate();
-    const { data } = useOneGet(
-        `https://659a84a0652b843dea53a3f9.mockapi.io/Crud/${id}`
-    );
-    const { updateData } = useUpdate(
-        `https://659a84a0652b843dea53a3f9.mockapi.io/Crud/${id}`
-    );
-
     useEffect(() => {
-        setUserData(data);
-    }, [id, data]);
+        const getOneEditUser = async () => {
+            const data = await getOneUser(id);
+            setUserData(data);
+        }
+        getOneEditUser()
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -39,10 +35,9 @@ const EditUser = () => {
             [name]: name === "isEmployeed" ? JSON.parse(value) : value,
         }));
     };
-
     const handleUpdateUser = async () => {
         try {
-            const success = await updateData(userData);
+            const success = await updateUser(id, userData);
             if (success) {
                 setUpdateMessage("User updated successfully!");
                 setTimeout(() => {

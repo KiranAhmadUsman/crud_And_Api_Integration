@@ -8,9 +8,9 @@ import GetAllUser from './pages/GetAllUser/GetAllUser';
 import EditUser from './pages/EditUser/EditUser';
 import Login from './pages/login/login';
 import PrivateRoutes from './Route/PrivateRoute';
-
 function App() {
   const router = createBrowserRouter([
+
     {
       path: "/dashboard",
       element: <PrivateRoutes />,

@@ -1,20 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useGet from "../../hooks/useAllGet";
-import useDelete from "../../hooks/useDelete";
+import GetAllData from "../../Services/GetAllUser";
+import deleteUser from "../../Services/DeleteUser";
 
 const GetAllUsers = () => {
     const [users, setUsers] = useState([]);
-    const { data } = useGet("https://659a84a0652b843dea53a3f9.mockapi.io/Crud");
-    const { deleteMessage, deleteData } = useDelete("https://659a84a0652b843dea53a3f9.mockapi.io/Crud", users, setUsers);
-
+    const [deleteMessage, setDeleteMessage] = useState("")
     useEffect(() => {
-        setUsers(data);
-    }, [data]);
+        const fetchData = async () => {
+            const data = await GetAllData();
+            setUsers(data);
+        }
+        fetchData()
+    }, []);
 
+    const handleDelete = async (id) => {
+        try {
+            const newdata = await deleteUser(id);
+            setUsers(newdata);
+            setDeleteMessage("User is deleted!");
+            setTimeout(() => {
+                setDeleteMessage('');
+            }, 1000);
+        } catch (error) {
+            console.error('Error deleting user:', error);
+        }
+    };
     return (
         <div className="p-[4rem] h-full">
-            { deleteMessage && <p className="text-green-500">{ deleteMessage }</p> }
+            { deleteMessage && <div className="flex justify-end">
+                <p className="flex justify-end text-red-500 bg-red-300 w-max p-2">{ deleteMessage }</p></div> }
 
             <h2 className="text-2xl mb-4">All Users</h2>
             <table className="w-full border-collapse border border-gray-300">
@@ -52,7 +67,7 @@ const GetAllUsers = () => {
                                 </Link>
                                 |
                                 <button
-                                    onClick={ () => deleteData(user.id, "User is deleted!") }
+                                    onClick={ () => handleDelete(user.id) }
                                     className="text-red-500 hover:underline ml-2"
                                 >
                                     Delete

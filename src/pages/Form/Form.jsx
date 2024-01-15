@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import usePost from '../../hooks/usePost';
 import Input from '../../Component/Input';
 import Label from '../../Component/label';
 import Button from '../../Component/Button';
@@ -7,6 +6,7 @@ import countryOptions from '../../const/countryArray';
 import DropDown from '../../Component/DropDown';
 import genderOptions from '../../const/GenderArrat';
 import employmentOptions from '../../const/employmentArray';
+import CreateUser from '../../Services/CreateUser';
 
 const Form = () => {
     const [formData, setFormData] = useState({
@@ -16,8 +16,7 @@ const Form = () => {
         Gender: '',
         isEmployeed: true,
     });
-    const { successMessage, postData } = usePost("https://659a84a0652b843dea53a3f9.mockapi.io/Crud");
-
+    const [successMessage, setSuccessMessage] = useState("")
     const handleChange = (e) => {
         const { name, value } = e.target;
         const newValue = name === 'isEmployeed' ? JSON.parse(value) : value;
@@ -27,7 +26,22 @@ const Form = () => {
             [name]: newValue,
         }));
     };
-
+    const handleCreateUser = async () => {
+        const status = await CreateUser(formData);
+        if (status === 201) {
+            setSuccessMessage("Successfully User Created!");
+            setFormData({
+                Name: '',
+                Email: '',
+                Country: '',
+                Gender: '',
+                isEmployeed: true
+            })
+            setTimeout(() => {
+                setSuccessMessage("")
+            }, 2000);
+        }
+    }
     return (
         <div className="flex items-center justify-center h-screen mt-8">
             <div className="w-full max-w-md">
@@ -42,14 +56,7 @@ const Form = () => {
                     <DropDown name="Gender" value={ formData.Gender } onChange={ handleChange } array={ genderOptions } />
                     <Label text="isEmployeed" />
                     <DropDown name="isEmployeed" value={ formData.isEmployeed } onChange={ handleChange } array={ employmentOptions } />
-                    <Button text="Create User" onClick={ () =>
-                        postData(formData, {
-                            Name: '',
-                            Email: '',
-                            Country: '',
-                            Gender: '',
-                            isEmployeed: true,
-                        }, setFormData, "Successfully User Created!") } />
+                    <Button text="Create User" onClick={ handleCreateUser } />
                     { successMessage && (
                         <p className="text-green-500 mt-4 bg-green-100 p-2 block dark:bg-green-400 dark:text-white">
                             { successMessage }

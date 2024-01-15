@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useOneGet from "../../hooks/useOneGet";
+import getOneUser from "../../Services/EditUser";
 
 const GetUser = () => {
     const { id } = useParams();
     const [userData, setUserData] = useState(null);
-    const { data } = useOneGet(`https://659a84a0652b843dea53a3f9.mockapi.io/Crud/${id}`);
-
     useEffect(() => {
-        setUserData(data);
-    }, [id, data]);
+        const getOneEditUser = async () => {
+            const data = await getOneUser(id);
+            setUserData(data);
+        }
+        getOneEditUser()
+    }, []);
 
     return (
         <div className="p-4">
